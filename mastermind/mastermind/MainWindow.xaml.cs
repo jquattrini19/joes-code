@@ -50,6 +50,7 @@ namespace mastermind
       // TODO: submit buttons
 
       masterCode = generateMasterCode();
+
       HideMasterTextBoxes();
 
       SetColors(masterCode[0], master_box1);
@@ -283,9 +284,24 @@ namespace mastermind
           masterCode_copy[boxNum - 1] = "exact";
         }
         else
-          answer = "white";
+        {
+          for (int count=0; count<4; count++)
+          {
+            if (masterCode_copy[count] == boxColor)
+            {
+              masterCode_copy[count] = "notExact";
+              answer = "white";
+            }
+          }
+        }
+          
       }
       return answer;
+    }
+
+    private void Window_Loaded(object sender, RoutedEventArgs e)
+    {
+      newGameButton_Click(null, null);
     }
   }
 }
