@@ -1,4 +1,4 @@
-text = "this is some text"
+text = "this is some text!"
 textArray = []
 length = len(text)
 
@@ -7,3 +7,4 @@ for count in range(length-1, -1, -1):
 
 resultText = ''.join(textArray)
 print(resultText)
+
