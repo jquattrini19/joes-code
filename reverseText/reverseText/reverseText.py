@@ -7,4 +7,3 @@ for count in range(length-1, -1, -1):
 
 resultText = ''.join(textArray)
 print(resultText)
-print("hi joe")
