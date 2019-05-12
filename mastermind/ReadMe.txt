@@ -1,0 +1,1 @@
+Mastermind color guessing game. Please look up directions on the internets.
