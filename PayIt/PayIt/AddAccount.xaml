@@ -1,0 +1,57 @@
+﻿<Window x:Class="PayIt.AddAccount"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PayIt"
+        mc:Ignorable="d" WindowStyle="ToolWindow"
+        Height="305" Width="800">
+  <Grid Margin="11">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="111"/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="30"/>
+      <RowDefinition Height="35"/>
+      <RowDefinition Height="30"/>
+      <RowDefinition Height="30"/>
+      <RowDefinition Height="30"/>
+      <RowDefinition Height="30"/>
+      <RowDefinition Height="30"/>
+      <RowDefinition Height="30"/>
+    </Grid.RowDefinitions>
+
+    <Border Grid.ColumnSpan="3" Background="WhiteSmoke">
+      <TextBlock Text="Add account"  HorizontalAlignment="Center" FontSize="18" FontWeight="DemiBold" Foreground="DarkBlue">
+      </TextBlock>
+    </Border>
+
+    <TextBlock Grid.Row="1" Text="Name:" VerticalAlignment="Center" Height="16" />
+    <TextBox Name="textBoxName" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,5,0,5"/>
+
+    <TextBlock Grid.Row="2" Text="Last paid due date:" VerticalAlignment="Center" Height="16" />
+    <TextBox Name="textBoxLastPaidDueDate" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,0,0,5"/>
+
+
+    <TextBlock Grid.Row="3" Text="Day of Month due:" VerticalAlignment="Center" Height="16" />
+    <TextBox Name="textBoxDayOfMonthDue" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,0,0,5"/>
+
+    <TextBlock Grid.Row="4" Text="End day:" VerticalAlignment="Center" Height="16" />
+    <TextBox Name="textBoxEndDay" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,0,0,5"/>
+    
+    <TextBlock Grid.Row="5" Text="Link:" VerticalAlignment="Center" Height="16"  />
+    <TextBox Name="textBoxLink" HorizontalAlignment="Stretch" Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"></TextBox>
+
+    <TextBlock Grid.Row="6" Text="Note:" VerticalAlignment="Center" Height="16"  />
+    <TextBox Name="textBoxNote" HorizontalAlignment="Stretch" Grid.Row="6" Grid.Column="1" Margin="0,0,0,5"></TextBox>
+
+    <StatusBar Grid.Row="7" Grid.ColumnSpan="3" Background="White">
+      <StatusBarItem Content="{Binding Status}"/>
+    </StatusBar>
+    <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" Width="111">
+      <Button Content="cancel" Width="50" IsCancel="True"/>
+      <Button Content="ok" Width="50" Margin="11,0,0,0" Click="OkClick"/>
+    </StackPanel>
+  </Grid>
+</Window>

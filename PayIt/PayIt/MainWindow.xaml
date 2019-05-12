@@ -1,0 +1,105 @@
+﻿<Window x:Class="PayIt.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PayIt"
+        mc:Ignorable="d"
+        Loaded="Window_Loaded" Closing="OnClosing" 
+        Title="MainWindow" Height="450" Width="900">
+  <Window.Resources>
+    
+    <Style TargetType="{x:Type TextBox}">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="MinWidth" Value="100"/>
+    </Style>
+
+  </Window.Resources>
+    <Grid Margin="11">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="35"/>
+      <RowDefinition />
+      <RowDefinition Height="50"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal">
+      <Button Name="AddButton" Content="+"  Width="20" Height="20" Click="AddAccountClick" ToolTip="Add a new account"/>
+      <TextBlock Text="Add an account" Margin="6,0,0,0" VerticalAlignment="Center"/>
+    </StackPanel>
+    <ListView
+      Name="mainListview"
+      Grid.Row="1"
+      ItemsSource="{Binding Path=AccountList}"
+      >
+      <ListView.ContextMenu>
+        <ContextMenu StaysOpen="true" Background="WhiteSmoke">
+          <ContextMenu.BitmapEffect>
+            <BitmapEffectGroup/>
+          </ContextMenu.BitmapEffect>
+          <MenuItem Header="Remove" Click="RemoveItemClick" />
+        </ContextMenu>
+      </ListView.ContextMenu>
+      <ListView.View>
+        <GridView>
+          <!--<GridViewColumn Width="35" Header=" " DisplayMemberBinding="{Binding Check}"/>-->
+          <GridViewColumn Width="140" Header="Account" >
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <TextBox Text="{Binding Path=Name}" TextChanged="TextBoxChanged">
+                  <TextBox.Style>
+                    <Style>
+                      <Setter Property="TextBox.BorderThickness" Value="0"/>
+                      <Setter Property="TextBox.MinWidth" Value="100"/>
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=TimeToPay}" Value="True">
+                          <Setter Property="TextBox.Foreground" Value="Red"/>
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </TextBox.Style>
+              </TextBox>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+          <GridViewColumn Width="140" Header="Last paid due date" >
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <DatePicker SelectedDate="{Binding Path=LastDueDatePaid}" SelectedDateChanged="LastPaidDueDateChanged" BorderThickness="0"
+                            Tag="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type ListViewItem}}}"></DatePicker>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+          <GridViewColumn Width="70" Header="Next due" DisplayMemberBinding="{Binding NextDue, StringFormat=d}"/>
+          <GridViewColumn Width="70" Header="End day" DisplayMemberBinding="{Binding StatementEndDay, StringFormat=d}">
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <TextBox Text="{Binding Path=StatementEndDay}" TextChanged="TextBoxChanged"></TextBox>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+          <GridViewColumn Width="140" Header="Pay it" >
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <TextBlock>
+                  <Hyperlink NavigateUri="{Binding Path=Link}" RequestNavigate="LinkClicked" TextDecorations="None">
+                    <TextBlock Text="{Binding Path=Link}" Foreground="Blue"/>
+                  </Hyperlink>
+                </TextBlock>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+          <GridViewColumn Width="240" Header="Note" >
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <TextBox Text="{Binding Note}" ToolTip="{Binding Note}" TextChanged="TextBoxChanged"/>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+        </GridView>
+      </ListView.View>
+    </ListView>
+  </Grid>
+</Window>
