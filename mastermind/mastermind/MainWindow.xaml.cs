@@ -12,9 +12,7 @@ namespace mastermind
   /// </summary>
   public partial class MainWindow : Window
   {
-    static string[] masterCode = new string[4];
-    List<string> masterCode_copy = new List<string>();
-
+    static string[] masterCode = new string[4]; // answer colors
     List<List<TextBox>> guessTextBoxes = new List<List<TextBox>>();
     List<List<TextBox>> answerTextBoxes = new List<List<TextBox>>();
 
@@ -47,8 +45,6 @@ namespace mastermind
 
     private void newGameButton_Click(object sender, RoutedEventArgs e)
     {
-      // TODO: submit buttons
-
       masterCode = generateMasterCode();
 
       HideMasterTextBoxes();
@@ -122,33 +118,69 @@ namespace mastermind
       master_box4.Visibility = Visibility.Collapsed;
     }
 
+    private string[] GetAnswerPegs(string[] guessArray)
+    {
+      List<string> masterCode_copy = new List<string>(masterCode);
+      string[] pegs = new string[4];
+
+      // initialize pegs to nope
+      for (int i = 0; i<pegs.Length; i++)
+      {
+        pegs[i] = "NOPE!";
+      }
+
+      // check each guess box and if it is exact, add a black peg and set the mastercode_copy for this
+      // position to done
+      // then for each guess box that didnt receive a black peg, check to see if the color exists in another
+      // position. if so, add a white peg and set the mastercode_copy position to done
+
+      // checking for blacks
+      for (int i=0; i<guessArray.Length; i++)
+      {
+        if (guessArray[i] == masterCode[i])
+        {
+          pegs[i] = "black";
+          masterCode_copy[i] = "done"; // changing it to done so that it doesnt get evaluated again when looking for whites
+        }
+      }
+
+      // checking for whites
+      for (int i=0; i<guessArray.Length; i++)
+      {
+        if (pegs[i] != "black")
+        {
+          for(int count=0; count<masterCode_copy.Count; count++)
+          {
+            if (masterCode_copy[count] == guessArray[i])
+            {
+              pegs[i] = "white";
+              masterCode_copy[count] = "done"; // changing it to done so that it doesnt get evaluated again
+              break;
+            }
+          }
+        }
+      }
+      return pegs;
+    }
+
     private void SubmitButton(object sender, RoutedEventArgs e)
     {
-
       var submitButton = sender as Button;
       if (submitButton == null || submitButton.Tag == null)
         return;
 
       int row = Convert.ToInt32(submitButton.Tag)-1;
 
-      masterCode_copy = new List<string>(masterCode);
-      List<string> pegs = new List<string>();
+      //masterCode_copy = new List<string>(masterCode);
       List<string> pegsFinal = new List<string>();
-      string box1 = guessTextBoxes[row][0].Text;
-      string box2 = guessTextBoxes[row][1].Text;
-      string box3 = guessTextBoxes[row][2].Text;
-      string box4 = guessTextBoxes[row][3].Text;
+      string[] guessArray = new string[4];
 
+      guessArray[0] = guessTextBoxes[row][0].Text;
+      guessArray[1] = guessTextBoxes[row][1].Text;
+      guessArray[2] = guessTextBoxes[row][2].Text;
+      guessArray[3] = guessTextBoxes[row][3].Text;
 
-      // gets the answer for each box
-      string peg1 = getAnswer(box1, 1);
-      pegs.Add(peg1);
-      string peg2 = getAnswer(box2, 2);
-      pegs.Add(peg2);
-      string peg3 = getAnswer(box3, 3);
-      pegs.Add(peg3);
-      string peg4 = getAnswer(box4, 4);
-      pegs.Add(peg4);
+      string[] pegs = GetAnswerPegs(guessArray);
 
       // puts pegs in order from black to white to none
       for (int count = 0; count < 4; count++)
@@ -232,7 +264,6 @@ namespace mastermind
 
     public static string[] generateMasterCode()
     {
-      //string[] masterCode = new string[4];
       List<string> masterCodeList = new List<string>();
       Random random = new Random();
 
@@ -271,32 +302,6 @@ namespace mastermind
       masterCode = masterCodeList.ToArray();
 
       return masterCode;
-    }
-
-    public string getAnswer(string boxColor, int boxNum)
-    {
-      string answer = "NOPE!";
-      if (masterCode_copy.Contains(boxColor))
-      {
-        if (masterCode_copy[boxNum - 1] == boxColor)
-        {
-          answer = "black";
-          masterCode_copy[boxNum - 1] = "exact";
-        }
-        else
-        {
-          for (int count=0; count<4; count++)
-          {
-            if (masterCode_copy[count] == boxColor)
-            {
-              masterCode_copy[count] = "notExact";
-              answer = "white";
-            }
-          }
-        }
-          
-      }
-      return answer;
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
