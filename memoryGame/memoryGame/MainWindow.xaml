@@ -1,0 +1,38 @@
+﻿<Window x:Class="memoryGame.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:memoryGame"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid Name="mainGrid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+
+    <Button Click="Button_Click" Grid.Row="0" Grid.Column="0" >
+      <Button.Content>
+        <Image Source="pictures\foofighters.jpg" Name="foofighters" Visibility="Hidden"></Image>
+      </Button.Content>
+    </Button>
+    <Button Click="Button_Click" Grid.Row="1" Grid.Column="1">
+      <Button.Content>
+        <Image Source="pictures\foofighters.jpg" Name="foofighters2" Visibility="Hidden"></Image>
+      </Button.Content>
+    </Button>
+    <Button Click="Button_Click" Grid.Row="0" Grid.Column="1">
+      <Button.Content>
+        <Image Source="pictures\grandpop.jpg" Name="grandpop" Visibility="Hidden"></Image>
+      </Button.Content>
+    </Button>
+
+  </Grid>
+</Window>
